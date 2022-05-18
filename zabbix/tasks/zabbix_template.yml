@@ -1,0 +1,43 @@
+---
+- name: Create a new Zabbix template linked to groups, macros and templates
+  local_action:
+    module: community.zabbix.zabbix_template
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    template_name: Zabbix servers
+    template_groups:
+      - Zabbix servers
+    link_templates:
+      - Linux by Zabbix agent
+    macros:
+      - macro: '{$EXAMPLE_MACRO1}'
+        value: 30000
+      - macro: '{$EXAMPLE_MACRO2}'
+        value: 3
+      - macro: '{$EXAMPLE_MACRO3}'
+        value: 'Example'
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+
+- name: Create a new Zabbix template linked to groups, macros and templates
+  local_action:
+    module: community.zabbix.zabbix_template
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    template_name: Zabbix servers
+    template_groups:
+      - Zabbix servers
+    link_templates:
+      - Linux by Zabbix agent
+    macros:
+      - macro: '{$EXAMPLE_MACRO1}'
+        value: 30000
+      - macro: '{$EXAMPLE_MACRO2}'
+        value: 3
+      - macro: '{$EXAMPLE_MACRO3}'
+        value: 'Example'
+    state: present
+  when: ansible_hostname == 'turbo'

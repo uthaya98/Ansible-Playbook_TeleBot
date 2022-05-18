@@ -1,0 +1,10 @@
+---
+- import_tasks: grafana_installation.yml
+- import_tasks: grafana_prometheus_datasource.yml
+- import_tasks: grafana_folder.yml
+- import_tasks: grafana_install_plugins.yml
+- import_tasks: grafana_dashboard_module.yml
+- import_tasks: grafana_datasource.yml
+- import_tasks: grafana_organization.yml
+- import_tasks: grafana_team_module.yml
+- import_tasks: grafana_user_module.yml

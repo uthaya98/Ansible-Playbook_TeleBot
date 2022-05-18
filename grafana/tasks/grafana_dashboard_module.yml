@@ -1,0 +1,45 @@
+---
+- name: Import Grafana dashboard prometheus
+  community.grafana.grafana_dashboard:
+    grafana_url: http://localhost:3000
+    grafana_api_key: "eyJrIjoiYnAyNHhzZk40ZXJBRmZ3eUR1Z0RKODdabnE3djJhMXgiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    state: present
+    commit_message: Updated by ansible
+    overwrite: yes
+    path: /home/uthayasurian/prometheus.json
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Import Grafana dashboard prometheus
+  community.grafana.grafana_dashboard:
+    grafana_url: http://172.16.1.64:3000
+    grafana_api_key: "eyJrIjoidU9ueG5iSFVjVWg0NmxCYmZKNlJNRFAzSXMxWlVMakIiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    state: present
+    commit_message: Updated by ansible
+    overwrite: yes
+    path: /home/uthaya/prometheus1.json
+  when: ansible_hostname == 'turbo'
+  
+
+- name: Export dashboard
+  community.grafana.grafana_dashboard:
+    grafana_url: http://localhost:3000
+    grafana_user: "admin"
+    grafana_password: "uthaya123"
+    org_id: 1
+    state: 1
+    state: export
+    uid: UDdpyzz7z
+    path: "/home/uthayasurian/UDdpyzz7z.json"
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Export dashboard
+  community.grafana.grafana_dashboard:
+    grafana_url: http://172.16.1.64:3000
+    grafana_user: "admin"
+    grafana_password: "uthaya123"
+    org_id: 1
+    state: 1
+    state: export
+    uid: UDdpyzz7z
+    path: "/home/uthaya/UDdpyzz7z.json"
+  when: ansible_hostname == 'turbo'

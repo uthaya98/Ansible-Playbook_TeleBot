@@ -1,0 +1,17 @@
+---
+- name: Create a folder
+  community.grafana.grafana_folder:
+    url: "http://localhost:3000"
+    grafana_api_key: "eyJrIjoiYnAyNHhzZk40ZXJBRmZ3eUR1Z0RKODdabnE3djJhMXgiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    title: "Grafana_working_group"
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create a folder
+  community.grafana.grafana_folder:
+    url: "http://172.16.1.64:3000"
+    grafana_api_key: "eyJrIjoidU9ueG5iSFVjVWg0NmxCYmZKNlJNRFAzSXMxWlVMakIiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    title: "Grafana_working_group"
+    state: present
+  when: ansible_hostname == 'turbo'
+

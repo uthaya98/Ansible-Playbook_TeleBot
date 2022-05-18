@@ -1,0 +1,36 @@
+---
+- name: Create a team
+  community.grafana.grafana_team:
+    url: "http://localhost:3000"
+    grafana_api_key: "eyJrIjoiYnAyNHhzZk40ZXJBRmZ3eUR1Z0RKODdabnE3djJhMXgiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    name: "grafana_working_group"
+    email: "uthayasurian98@gmail.com"
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create a team
+  community.grafana.grafana_team:
+    url: "http://172.16.1.64:3000"
+    grafana_api_key: "eyJrIjoidU9ueG5iSFVjVWg0NmxCYmZKNlJNRFAzSXMxWlVMakIiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    name: "grafana_working_group"
+    email: "uthayasurian98@gmail.com"
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: Delete a team
+  community.grafana.grafana_team:
+    url: "http://localhost:3000"
+    grafana_api_key: "eyJrIjoiYnAyNHhzZk40ZXJBRmZ3eUR1Z0RKODdabnE3djJhMXgiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    name: "grafana_working_group"
+    email: "uthayasurian98@gmail.com"
+    state: absent
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Delete a team
+  community.grafana.grafana_team:
+    url: "http://172.16.1.64:3000"
+    grafana_api_key: "eyJrIjoidU9ueG5iSFVjVWg0NmxCYmZKNlJNRFAzSXMxWlVMakIiLCJuIjoiYW5zaWJsZSIsImlkIjoxfQ=="
+    name: "grafana_working_group"
+    email: "uthayasurian98@gmail.com"
+    state: absent
+  when: ansible_hostname == 'turbo'

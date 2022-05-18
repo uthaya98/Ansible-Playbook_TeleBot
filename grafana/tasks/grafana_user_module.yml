@@ -1,0 +1,44 @@
+---
+- name: Create or update a Grafana user
+  community.grafana.grafana_user:
+    url: "http://localhost:3000"
+    url_username: admin
+    url_password: uthaya123
+    name: "Bruce Wayne"
+    email: batman@gotham.city
+    login: batman
+    password: robin
+    is_admin: true
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create or update a Grafana user
+  community.grafana.grafana_user:
+    url: "http://172.16.1.64:3000"
+    url_username: admin
+    url_password: uthaya123
+    name: "Bruce Wayne"
+    email: batman@gotham.city
+    login: batman
+    password: robin
+    is_admin: true
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: Delete a Grafana user
+  community.grafana.grafana_user:
+    url: "http://localhost:3000"
+    url_username: admin
+    url_password: uthaya123
+    login: batman
+    state: absent
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Delete a Grafana user
+  community.grafana.grafana_user:
+    url: "http://172.16.1.64:3000"
+    url_username: admin
+    url_password: uthaya123
+    login: batman
+    state: absent
+  when: ansible_hostname == 'turbo'

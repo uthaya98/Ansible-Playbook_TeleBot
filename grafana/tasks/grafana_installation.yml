@@ -1,0 +1,93 @@
+---
+- name: install gpg 
+  apt:
+    name: gnupg,software-properties-common
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: install gpg 
+  apt:
+    name: gnupg,software-properties-common
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_hostname == 'turbo'
+
+- name: add gpg key
+  apt_key:
+     url: "https://packages.grafana.com/gpg.key"
+     validate_certs: no
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: add gpg key
+  apt_key:
+     url: "https://packages.grafana.com/gpg.key"
+     validate_certs: no
+  when: ansible_hostname == 'turbo'
+
+- name: add repository
+  apt_repository:
+    repo: "deb https://packages.grafana.com/oss/deb stable main"
+    state: present
+    validate_certs: no
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: add repository
+  apt_repository:
+    repo: "deb https://packages.grafana.com/oss/deb stable main"
+    state: present
+    validate_certs: no
+  when: ansible_hostname == 'turbo'
+
+- name: install grafana
+  apt: 
+    name: grafana
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: install grafana
+  apt: 
+    name: grafana
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_hostname == 'turbo'
+
+- name: Start service grafana-server
+  ansible.builtin.systemd:
+     name: grafana-server
+     state: started
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Start service grafana-server
+  ansible.builtin.systemd:
+     name: grafana-server
+     state: started
+  when: ansible_hostname == 'turbo'
+
+- name: Make sure service grafana-server is running
+  uri:
+    url: "http://127.0.0.1:3000"
+    status_code: 200
+  register: __result
+  until: __result.status == 200
+  retries: 120
+  delay: 1
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+
+- name: Make sure service grafana-server is running
+  uri:
+    url: "http://172.16.1.64:3000"
+    status_code: 200 
+  register: __result
+  until: __result.status == 200
+  retries: 120
+  delay: 1
+  when: ansible_hostname == 'turbo'
+  
+

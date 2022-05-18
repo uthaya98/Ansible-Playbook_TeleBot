@@ -1,0 +1,14 @@
+---
+- name: Install/update Grafana piechart panel plugin
+  community.grafana.grafana_plugin:
+    name: grafana-piechart-panel
+    version: latest
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Install/update Grafana piechart panel plugin
+  community.grafana.grafana_plugin:
+    name: grafana-piechart-panel
+    version: latest
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'

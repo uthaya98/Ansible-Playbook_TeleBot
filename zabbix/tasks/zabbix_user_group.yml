@@ -1,0 +1,36 @@
+---
+- name: Create user group
+  community.zabbix.zabbix_usergroup:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create user group
+  community.zabbix.zabbix_usergroup:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: Create user group with disabled gui access
+  community.zabbix.zabbix_usergroup:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    gui_access: disable
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create user group with disabled gui access
+  community.zabbix.zabbix_usergroup:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    gui_access: disable
+  when: ansible_hostname == 'turbo'

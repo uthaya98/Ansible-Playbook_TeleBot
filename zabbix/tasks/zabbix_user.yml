@@ -1,0 +1,99 @@
+---
+- name: create a new zabbix user
+  community.zabbix.zabbix_user:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    alias: Example
+    name: uthaya
+    surname: server1
+    usrgrps:
+      - Guests
+      - Disabled
+    passwd: zabbix011
+    lang: en_US
+    theme: blue-theme
+    autologin: no
+    autologout: '0'
+    refresh: '30'
+    rows_per_page: '200'
+    after_login_url: ''
+    user_medias:
+      - mediatype: Email
+        sendto: uthayasurian98@gmail.com
+        period: 1-7,00:00-24:00
+        severity:
+          not_classified: no
+          information: yes
+          warning: yes
+          average: yes
+          high: yes
+          disaster: yes
+        active: no
+    type: Zabbix super admin
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: create a new zabbix user
+  community.zabbix.zabbix_user:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    alias: Example
+    name: uthaya
+    surname: server1
+    usrgrps:
+      - Guests
+      - Disabled
+    passwd: zabbix011
+    lang: en_US
+    theme: blue-theme
+    autologin: no
+    autologout: '0'
+    refresh: '30'
+    rows_per_page: '200'
+    after_login_url: ''
+    user_medias:
+      - mediatype: Email
+        sendto: uthayasurian98@gmail.com
+        period: 1-7,00:00-24:00
+        severity:
+          not_classified: no
+          information: yes
+          warning: yes
+          average: yes
+          high: yes
+          disaster: yes
+        active: no
+    type: Zabbix super admin
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: delete existing zabbix user
+  community.zabbix.zabbix_user:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    alias: example
+    usrgrps:
+      - Guests
+    passwd: zabbix011
+    user_medias:
+      - sendto: uthayasurian98@gmail.com
+    state: absent
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: delete existing zabbix user
+  community.zabbix.zabbix_user:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    alias: example
+    usrgrps:
+      - Guests
+    passwd: zabbix011
+    user_medias:
+      - sendto: uthayasurian98@gmail.com
+    state: absent
+  when: ansible_hostname == 'turbo'
+

@@ -1,0 +1,300 @@
+---
+- name: Deploy trigger action
+  community.zabbix.zabbix_action:
+          server_url: "http://localhost/"
+          login_user: Admin
+          login_password: zabbix
+          name: "Send alerts to Admin"
+          event_source: 'trigger'
+          state: present
+          status: enabled
+          esc_period: 1h
+          conditions:
+              - type: 'trigger_severity'
+                operator: '>='
+                value: 'Information'
+          operations:
+              - type: send_message
+                subject: "Something bad is happening"
+                message: "Come on, guys do something"
+                media_type: 'Email'
+                send_to_users:
+                  - 'Admin'
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Deploy trigger action
+  community.zabbix.zabbix_action:
+          server_url: "http://172.16.1.64/"
+          login_user: Admin
+          login_password: zabbix
+          name: "Send alerts to Admin"
+          event_source: 'trigger'
+          state: present
+          status: enabled
+          esc_period: 1h
+          conditions:
+              - type: 'trigger_severity'
+                operator: '>='
+                value: 'Information'
+          operations:
+              - type: send_message
+                subject: "Something bad is happening"
+                message: "Come on, guys do something"
+                media_type: 'Email'
+                send_to_users:
+                  - 'Admin'
+  when: ansible_hostname == 'turbo'
+
+
+- name: Create a named maintenance window for host www1 for 90 minutes
+  community.zabbix.zabbix_maintenance:
+          name: Update of www1
+          host_name: Zabbix server
+          state: present
+          minutes: 90
+          server_url: http://localhost/
+          login_user: Admin
+          login_password: zabbix
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+
+- name: Create a named maintenance window for host www1 for 90 minutes
+  community.zabbix.zabbix_maintenance:
+          name: Update of www1
+          host_name: Zabbix server
+          state: present
+          minutes: 90
+          server_url: http://172.16.1.64/
+          login_user: Admin
+          login_password: zabbix
+  when: ansible_hostname == 'turbo'
+
+- name: Create a named maintenance window for host www1 and host groups office and dev
+  community.zabbix.zabbix_maintenance:
+          name: Update of ww1
+          host_name: Zabbix server
+          host_groups:
+            - Zabbix servers
+          state: present
+          server_url: http://localhost/
+          login_user: Admin
+          login_password: zabbix
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create a named maintenance window for host www1 and host groups office and dev
+  community.zabbix.zabbix_maintenance:
+          name: Update of ww1
+          host_name: Zabbix server
+          host_groups:
+            - Zabbix servers
+          state: present
+          server_url: http://172.16.1.64/
+          login_user: Admin
+          login_password: zabbix
+  when: ansible_hostname == 'turbo'
+  
+- name: Get hostgroup info
+  local_action:
+      module: community.zabbix.zabbix_group_info
+      server_url: http://localhost
+      login_user: Admin
+      login_password: zabbix
+      hostgroup_name:
+         - Zabbix servers
+      timeout: 10
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Get hostgroup info
+  local_action:
+      module: community.zabbix.zabbix_group_info
+      server_url: http://172.16.1.64/
+      login_user: Admin
+      login_password: zabbix
+      hostgroup_name:
+         - Zabbix servers
+      timeout: 10
+  when: ansible_hostname == 'turbo'
+
+- name: Remove maintenance window by name
+  community.zabbix.zabbix_maintenance:
+    name: Test1
+    state: absent
+    server_url: http://localhost/
+    login_user: Admin
+    login_password: zabbix
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Remove maintenance window by name
+  community.zabbix.zabbix_maintenance:
+    name: Test1
+    state: absent
+    server_url: http://172.16.1.64/
+    login_user: Admin
+    login_password: zabbix
+  when: ansible_hostname == 'turbo'
+
+- name: Create new host macro in Zabbix native format
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    login_user: Admin
+    login_password: zabbix
+    server_url: http://localhost/
+    host_name: Zabbix server
+    macro_name: "{$EXAMPLE.MACRO}"
+    macro_value: Example value
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create new host macro in Zabbix native format
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    login_user: Admin
+    login_password: zabbix
+    server_url: http://172.16.1.64/
+    host_name: Zabbix server
+    macro_name: "{$EXAMPLE.MACRO}"
+    macro_value: Example value
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: Create new host macro or update an existing macro's value
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    server_url: http://localhost/
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    macro_name: EXAMPLE.MACRO
+    macro_value: Example value
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create new host macro or update an existing macro's value
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    server_url: http://172.16.1.64/
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    macro_name: EXAMPLE.MACRO
+    macro_value: Example value
+    state: present
+  when: ansible_hostname == 'turbo'
+
+- name: Delete existing host macro
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    macro_name: "{EXAMPLE.MACRO}"
+    state: absent
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Delete existing host macro
+  local_action:
+    module: community.zabbix.zabbix_hostmacro
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    macro_name: "{EXAMPLE.MACRO}"
+    state: absent
+  when: ansible_hostname == 'turbo'
+
+- name: Get Zabbix template as JSON
+  community.zabbix.zabbix_template_info:
+    server_url: http://localhost/
+    login_user: Admin
+    login_password: zabbix
+    template_name: Ubiquiti AirOS SNMP
+    format: json
+    omit_date: yes
+  register: template_json
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Get Zabbix template as JSON
+  community.zabbix.zabbix_template_info:
+    server_url: http://172.16.1.64/
+    login_user: Admin
+    login_password: zabbix
+    template_name: Ubiquiti AirOS SNMP
+    format: json
+    omit_date: yes
+  register: template_json
+  when: ansible_hostname == 'turbo'
+
+- name: Get Zabbix tempate as XML
+  community.zabbix.zabbix_template_info:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    template_name: Ubiquiti AirOS SNMP
+    format: xml
+    omit_date: no
+  register: template_json
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Get Zabbix tempate as XML
+  community.zabbix.zabbix_template_info:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    template_name: Ubiquiti AirOS SNMP
+    format: xml
+    omit_date: no
+  register: template_json
+  when: ansible_hostname == 'turbo'
+
+- name: Create discovery rule with ICMP and zabbix agent checks
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: present
+    iprange: 192.168.1.1-255
+    dchecks:
+         - type: ICMP
+         - type: Zabbix
+           key: zabbix
+           ports: 10050
+           uniq: yes
+           host_source: "discovery"
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Create discovery rule with ICMP and zabbix agent checks
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: present
+    iprange: 192.168.1.1-255
+    dchecks:
+         - type: ICMP
+         - type: Zabbix
+           key: zabbix
+           ports: 10050
+           uniq: yes
+           host_source: "discovery"
+  when: ansible_hostname == 'turbo'
+
+- name: Delete discovery rule
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: absent
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Delete discovery rule
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    name: ACME
+    state: absent
+  when: ansible_hostname == 'turbo'

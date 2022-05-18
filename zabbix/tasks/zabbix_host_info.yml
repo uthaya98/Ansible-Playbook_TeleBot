@@ -1,0 +1,58 @@
+---
+- name: Get host info
+  local_action:
+    module: community.zabbix.zabbix_host_info
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    host_ip: 127.0.0.1
+    timeout: 10
+    exact_match: no
+    remove_duplicate: yes
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Get host info
+  local_action:
+    module: community.zabbix.zabbix_host_info
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    host_ip: 127.0.0.1
+    timeout: 10
+    exact_match: no
+    remove_duplicate: yes
+  when: ansible_hostname == 'turbo'
+
+- name: Reduce host inventory information to provided keys
+  local_action:
+    module: community.zabbix.zabbix_host_info
+    server_url: "http://localhost/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    host_inventory:
+      - os
+      - tag
+    host_ip: 127.0.0.1
+    timeout: 10
+    exact_match: no
+    remove_duplicate: yes
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+- name: Reduce host inventory information to provided keys
+  local_action:
+    module: community.zabbix.zabbix_host_info
+    server_url: "http://172.16.1.64/"
+    login_user: Admin
+    login_password: zabbix
+    host_name: Zabbix server
+    host_inventory:
+      - os
+      - tag
+    host_ip: 127.0.0.1
+    timeout: 10
+    exact_match: no
+    remove_duplicate: yes
+  when: ansible_hostname == 'turbo'

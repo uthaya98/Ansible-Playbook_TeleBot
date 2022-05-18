@@ -1,0 +1,19 @@
+---
+- name: Create a Grafana organization
+  community.grafana.grafana_organization:
+    url: "http://localhost:3000"
+    url_username: admin
+    url_password: uthaya123
+    name: orgtest
+    state: present
+  when: ansible_hostname == 'uthaya-Latitude-5400'
+
+
+- name: Create a Grafana organization
+  community.grafana.grafana_organization:
+    url: "http://172.16.1.64:3000"
+    url_username: admin
+    url_password: uthaya123
+    name: orgtest
+    state: present
+  when: ansible_hostname == 'turbo'

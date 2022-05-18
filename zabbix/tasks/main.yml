@@ -1,0 +1,6 @@
+---
+- import_tasks: zabbix_trial_action.yml
+- import_tasks: zabbix_host_info.yml
+- import_tasks: zabbix_template.yml
+- import_tasks: zabbix_user_group.yml
+- import_tasks: zabbix_user.yml
